@@ -1,0 +1,23 @@
+apiVersion: api.redhat.com/v1beta1
+kind: Service
+spec:
+  name: test-service
+  team: it-eai
+  domain: canary
+  appCode: EAI-001
+  description: >-
+    Test Service
+  containerDefaults: &containerDefaults
+    kind: StandardSpringBoot
+  environments:
+    dev:
+      sites:
+        preprod-spoke-aws-us-east-1: {}
+        preprod-spoke-dc-iad2: {}
+      config:
+        forSpringApplicationProperties:
+          application.properties:
+            fromFile: infrastructure/service-common.properties
+      secrets:
+        forSpringEnvironment:
+          spring.datasource.password: <spring_datasource_password_dev>
